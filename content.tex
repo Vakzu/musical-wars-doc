@@ -96,38 +96,25 @@
 
 \addcontentsline{toc}{section}{Этап 3}
 
-\subsection*{Сделать скрипты для создания и удаления базы данных}
+% =======
 
-\addcontentsline{toc}{subsection}{Сделать скрипты для создания и удаления базы данных}
+\subsection*{Создать необходимые объекты базы данных}
 
-\begin{enumerate}
-    \item buy\_hero(user\_id, hero\_id, sum) 
-    - юзер покупает героя, создаем сущность Character
+\addcontentsline{toc}{subsection}{Создать необходимые объекты базы данных}
 
-    \item get\_online\_list() -> List<User>
-    - выводим список юзеров, которые находятся в сети
+% =======
 
-    \item inter\_fight(location\_id, song\_id\_0, song\_id\_1, hero\_id\_0, hero\_id\_1, effect\_0, effect\_id\_1, user\_id\_0, user\_id\_1) -> fight\_id
-    - Создаёт запись в fight с начальным временем, создаёт запись в fight\_participant с пользователем, добавляет битву в него 
+\subsection*{Заполнить созданные таблицы тестовыми данными}
 
-    \item add\_fight\_participant(song\_id, character\_id, effect\_id, fight\_id)
+\addcontentsline{toc}{subsection}{Заполнить созданные таблицы тестовыми данными}
 
-    \item finish\_fight(fight\_id, character\_id) -> None
-    - Поставить ссылку на победителя в битве
+% =======
 
-    \item get\_available\_songs(character\_id) -> song\_id
-    - находит доступные для выбора песни
-    
-    \item get\_effects() -> List<Effect>
-    - получить все доступные эффекты 
-    
-    \item get\_locations() -> List<Location>
-    - получить все локации
+\subsection*{Обеспечить целостность данных при помощи средств языка DDL}
 
-    \item get\_fight\_participants(fight\_id) -> List<Fight\_Participant>
-    - Получить список участников сражения
+\addcontentsline{toc}{subsection}{Обеспечить целостность данных при помощи средств языка DDL}
 
-    \end{enumerate}
+% =======
 
 \subsection*{Добавить в базу данных триггеры для обеспечения комплексных ограничений
 целостности}
@@ -136,13 +123,70 @@
 целостности}
 
 \begin{enumerate}
-    \item On update fight 
-    - Берем бабки и опыт с програвшего, берем с победителя и по бизнес логике перераспределяем через 2 join'a на user'a
+    \item pay\_for\_hero\_log 
+    - Тригер для фиксации транзакции игрока за героя(снимает деньги с баланса и добавляет нового героя)
 
-    \item On buy hero
-    - При вставке новой сущности в character снимаем деньги с user'a
+    \item pay\_for\_effect\_log
+    - Тригер для фиксации транзакции игрока за эффект(снимает деньги с баланса и добавляет эффект в распоряжение)
+\end{enumerate}
 
-    \item On update fight\_participant
-    - Сверяет damage и определяет победителя если он >= со здоровьем, то он умер
-    
-\end{enumerate}ww
+% =====
+
+\subsection*{Реализовать функции и процедуры на основе описания бизнес-процессов}
+
+\addcontentsline{toc}{subsection}{Реализовать функции и процедуры на основе описания бизнес-процессов}
+
+\begin{enumerate}
+    \item get\_effect\_shop\_info(user\_id) 
+    - Возвращает все эффекты, которые можно использовать текущему игроку
+
+    \item buy\_effect(user\_id, effect\_id)
+    - Функция покупки эффекта(eсли у пользователя хватает денег на эффект, то покупаем эффект вычитая стоимость из баланса и занося в inventory)
+
+    \item buy\_hero(user\_id, hero\_id)
+    - Функция покупки персонажа(если у игрока хватает денег, то вычитаем стоимость персонажа из баланса и добавляем героя связывая с игроком)
+
+    \item get\_base\_character\_info(character\_id, song\_id)
+    - Возвращает основную информацию по герою(id, id игрока, id\_в\_драке, здоровье, урон, выносливость, удача)
+
+    \item get\_shop\_info\_for\_user(user\_id)
+    - Возвращает список доступных для покупки персонажей с их характеристиками(id, имя, цена, здоровье, аватарка, id\_игрока)
+
+    \item get\_characters\_info\_with\_songs(character\_id[], song\_id[])
+    - Возвращает список информаций по участникам драки основываясь участниках и их песнях
+
+    \item get\_upgrade\_character\_info(participant\_info, effect\_id)
+    - Изменяет характеристики участника драки в соответствии с выбранным эффектом
+
+    \item get\_available\_effects\_for\_user(user\_id)
+    - Выводит список доступных эффектов для выбора для игрока
+
+    \item get\_available\_songs\_for\_character(character\_id)
+    - Выводит список доступных песен для героя
+
+    \item begin\_fight(character\_id[], effect\_id[], song\_id[], location\_id)
+    - Функция для начала сражения(прогоняет весь матч и возвращает таблицу ходов)
+
+\end{enumerate}
+
+% =====
+
+\subsection*{Произвести анализ использования созданной базы данных}
+
+\addcontentsline{toc}{subsection}{Произвести анализ использования созданной базы данных}
+
+\subsubsection*{Выявить наиболее часто используемые запросы к объектам базы данных}
+
+\addcontentsline{toc}{subsubsection}{Выявить наиболее часто используемые запросы к объектам базы данных}
+
+\subsubsection*{Результаты представить в виде текстового описания}
+
+\addcontentsline{toc}{subsubsection}{Результаты представить в виде текстового описания}
+
+\subsection*{Создать индексы и доказать, что они полезны для вашей базы данных}
+
+\addcontentsline{toc}{subsection}{Создать индексы и доказать, что они полезны для вашей базы данных}
+
+\subsubsection*{Доказательство должно быть приведено в виде текстового описания}
+
+\addcontentsline{toc}{subsubsection}{Доказательство должно быть приведено в виде текстового описания}
