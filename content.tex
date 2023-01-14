@@ -178,9 +178,12 @@
 \begin{itemize}
     \item \textbf{user}
     \begin{itemize}
+
+        \item По \textbf{is\_online}
         \item По \textbf{name}
     \end{itemize}
     Потенциально полезным будет использовать hash index для атрибута \textbf{name}, так как происходит выборка по эквивалентности.
+
     
     \item \textbf{character}
     \begin{itemize}
@@ -206,6 +209,7 @@
 
 \begin{itemize}
     \item Hash index на user(name)
+    
     \begin{figure}[H]
 	\begin{center}
 		\includegraphics[scale=0.7]{images/user_name_not_index.png}
