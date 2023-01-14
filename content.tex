@@ -111,6 +111,8 @@
 
 \section*{Этап 3}
 
+\addcontentsline{toc}{section}{Этап 3}
+
 \faGithub\href{https://github.com/Vakzu/musical-wars-backend/tree/main/src/main/resources/sql_scripts}{\textbf{Ссылка на код}}
 
 \subsection*{Добавить в базу данных триггеры для обеспечения комплексных ограничений
@@ -176,12 +178,12 @@
 \begin{itemize}
     \item \textbf{user}
     \begin{itemize}
+
         \item По \textbf{is\_online}
         \item По \textbf{name}
     \end{itemize}
     Потенциально полезным будет использовать hash index для атрибута \textbf{name}, так как происходит выборка по эквивалентности.
 
-    Добавление индекса для атрибута \textbf{is\_online} бесполезно и не несёт смысла так как значений всего два.
     
     \item \textbf{character}
     \begin{itemize}
@@ -191,28 +193,15 @@
 
     Потенциально полезным будет использовать hash index для атрибута \textbf{user\_id} и \textbf{id}, так как происходит выборка по эквивалентности.
 
-    \item \textbf{hero}
-    \begin{itemize}
-        \item По \textbf{id}
-    \end{itemize}
-
-    Потнциально полезным будет использовать hash index для атрибута \textbf{id}, так как происходит выборка по эквивалентности.
-
-    \item \textbf{effect}
-    \begin{itemize}
-        \item По \textbf{id}
-    \end{itemize}
-
-    Потнциально полезным будет использовать hash index для атрибута \textbf{id}, так как происходит выборка по эквивалентности.
-
     \item \textbf{inventory}
     \begin{itemize}
         \item По \textbf{user\_id}
-        \item По \textbf{effect\_id}
     \end{itemize}
 
-    Потнциально полезным будет использовать hash index для атрибута \textbf{user\_id} и \textbf{effect\_id}, так как происходит выборка по эквивалентности.
+    Потнциально полезным будет использовать hash index для атрибута \textbf{user\_id}, так как происходит выборка по эквивалентности.
 \end{itemize}
+
+\newpage
 
 \subsection*{Доказательство того, что индексы действительно полезны}
 
@@ -221,15 +210,67 @@
 \begin{itemize}
     \item Hash index на user(name)
     
+    \begin{figure}[H]
+	\begin{center}
+		\includegraphics[scale=0.7]{images/user_name_not_index.png}
+            \caption{До добавления индекса}
+	\end{center}
+    \end{figure}
+    \begin{figure}[H]
+	\begin{center}
+		\includegraphics[scale=0.4]{images/user_name_index.jpg}
+            \caption{После добавления индекса}
+	\end{center}
+    \end{figure}
+    
     \item Hash index на character(user\_id)
+    \begin{figure}[H]
+	\begin{center}
+		\includegraphics[scale=0.7]{images/character_user_id_before.jpg}
+            \caption{До добавления индекса}
+	\end{center}
+    \end{figure}
+    \begin{figure}[H]
+	\begin{center}
+		\includegraphics[scale=1]{images/character_user_id_after.jpg}
+            \caption{После добавления индекса}
+	\end{center}
+    \end{figure}
+
+    \newpage
     
     \item Hash index на character(id)
-
-    \item Hash index на hero(id)
-
-    \item Hash index на effect(id)
-
+    \begin{figure}[H]
+	\begin{center}
+		\includegraphics[scale=0.8]{images/character_id_before.jpg}
+            \caption{До добавления индекса}
+	\end{center}
+    \end{figure}
+    \begin{figure}[H]
+	\begin{center}
+		\includegraphics[scale=0.8]{images/character_id_after.jpg}
+            \caption{После добавления индекса}
+	\end{center}
+    \end{figure}
+    
     \item Hash index на inventory(user\_id)
+    \begin{figure}[H]
+	\begin{center}
+		\includegraphics[scale=0.8]{images/inventory_user_id_before.jpg}
+            \caption{До добавления индекса}
+	\end{center}
+    \end{figure}
+    \begin{figure}[H]
+	\begin{center}
+		\includegraphics[scale=1]{images/inventory_user_id_after.jpg}
+            \caption{После добавления индекса}
+	\end{center}
+    \end{figure}
 
-    \item Hash index на inventory(effect\_id)
 \end{itemize}
+
+\section*{Этап 4}
+
+\addcontentsline{toc}{section}{Этап 4}
+
+\faGithub\href{https://github.com/orgs/Vakzu/repositories}{\textbf{Ссылка на проект}}
